@@ -4,7 +4,7 @@ import {InitApiRoute} from './route/web'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import db from "./models"
+// import db from "./models"
 require("dotenv").config();
  
 const app = express();
@@ -22,14 +22,14 @@ app.use(bodyParser.json())
 // InitWebRoute(app);
 InitApiRoute(app)
 
-db.sequelize.sync({ force: true }).then(() => {
-   console.log(' created successfully!');
-}).catch((error) => {
-   console.error('Unable to create table : ', error);
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//    console.log(' created successfully!');
+// }).catch((error) => {
+//    console.error('Unable to create table : ', error);
+// });
  
 
-
+ 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
