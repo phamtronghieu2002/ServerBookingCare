@@ -9,8 +9,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
+
+      key: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      valueEN: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      valueVN: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

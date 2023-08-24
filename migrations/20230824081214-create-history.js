@@ -9,8 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
+
+      descriptions: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      file: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

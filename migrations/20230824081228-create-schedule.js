@@ -9,8 +9,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
+      currentNumber: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      maxNumber: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      timeType: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
