@@ -37,9 +37,21 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    position: {
-      type: Sequelize.STRING,
-      allowNull: true, 
+    roleID: {
+      type: Sequelize.INTEGER,
+      allowNull: false, 
+      references: {
+        model: 'allcodes',
+        key: 'id'
+      },
+    },
+    positionID: {
+      type: Sequelize.INTEGER,
+      allowNull: false, 
+      references: {
+        model: 'allcodes',
+        key: 'id'
+      },
     },
     image: {
       type: Sequelize.BLOB('long'),
