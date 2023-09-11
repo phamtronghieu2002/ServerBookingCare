@@ -1,33 +1,31 @@
-import { Allcode } from "../models/allCodes";
+import db from "..//..//models";
 
-
-
-export const getAllcode = async (type)=>{
-
-
-    if(!type)
-    {
-            return {
-                errCode:1,
-                message:"missing params"
-            }
-    }
+export const getAllcodeByType = async (typeID) => {
 try {
-    const allCodes = await Allcode.findAll({raw:true, where: {
-        type
-      }});
-
-      return {
+    const allCodes = await db.Allcode.findAll({
+        where: { type_id: typeID },
+        raw: true,
+        attributes: ['key_id', 'valueEN'],
+      });
+  console.log(allCodes)
+  if(allCodes.length>0)
+  {
+    return {
         errCode:0,
         message:"ok",
         data:allCodes
     }
+  }
+  return {
+    errCode:1,
+    message:"allcode not found !!!"
+    
+}
 } catch (error) {
-    return {
-        errCode:2,
-        message:error.toString()
-    }
+    console.log(error)
 }
 
+  
 
-}
+
+};

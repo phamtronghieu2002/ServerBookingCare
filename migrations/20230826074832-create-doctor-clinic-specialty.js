@@ -2,35 +2,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('histories', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
+    await queryInterface.createTable('doctor_clinic_specialties', {
 
-      descriptions: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      file: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       doctorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: 'Users', // Thay thế bằng tên thực sự của bảng Allcodes
           key: 'id'
         }
       },
-    patientId: {
+      clinicId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
-          model: 'Users', // Thay thế bằng tên thực sự của bảng Allcodes
+          model: 'Clinics', // Thay thế bằng tên thực sự của bảng Allcodes
+          key: 'id'
+        }
+      },
+      specialtyId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'Specialists', // Thay thế bằng tên thực sự của bảng Allcodes
           key: 'id'
         }
       },
@@ -45,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('histories');
+    await queryInterface.dropTable('doctor_clinic_specialties');
   }
 };

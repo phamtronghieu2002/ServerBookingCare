@@ -1,121 +1,163 @@
-import { User } from "../models/users";
-import bcrypt  from "bcrypt"
+import db from "../../models";
+import bcrypt from "bcrypt";
+import { Buffer } from "node:buffer";
 
-const hashPassword = async(password)=>{
-
-
-    const saltRounds = 10 
-    const salt=  await bcrypt.genSalt(saltRounds)
-    return  await bcrypt.hash(password, salt)
-  
-  
-  }
-  
-
-export const addUser = async (user)=>{
+export const bufferTobase64 =(bufferImage)=>{
 
 
-
-  console.log(user)
-
-    try {
-        if(user)
-        {
-           await User.create({...user,gender:user.gender==="nam" ?1:0 ,password:await hashPassword(user.password)  });
-           return {
-            errCode:0,
-            message:"ok",
-            user
-           }
-        }
-
-    } catch (error) {
-        return {
-            errCode:0,
-            message:error
-           }
-    }
-
-
-
-
+  return new Buffer(bufferImage, "base64").toString("binary");
 }
 
-export const getUsers  =async ()=>{
+const hashPassword = (saltRounds, password) => {
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(password, salt);
 
+  return hash;
+};
+
+export const addUser = async (
+  firstname,
+  lastname,
+  gender,
+  address,
+  phonenumber,
+  roleID,
+  positionID,
+  email = "",
+  password = "",
+  image = "",
+  descriminator
+) => {
   try {
-    const users = await User.findAll({raw:true});
-    console.log(users)
-    if(users)
-    {
-      users.forEach((u)=>delete u.password)
-      console.log(users)
+    let user;
+    if (descriminator) {
+      const passwordHash = hashPassword(10,password);
+      user = await db.User.create({
+        firstname,
+        lastname,
+        gender,
+        address,
+        phonenumber,
+        roleID,
+        positionID,
+        email,
+        password: passwordHash,
+        image,
+      },{raw:true});
+    } else {
+      user = await db.User.create({
+        firstname,
+        lastname,
+        gender,
+        address,
+        phonenumber,
+        roleID,
+        positionID,
+      },{raw:true});
+    }
+    if (user) {
+
+     console.log(user.password !== undefined)
+     console.log("user >>>>",user)
+
+     if (user.password !== undefined) {
+       user={...user.dataValues}
+      delete user.password;
+    }
+        
+  
+
+
       return {
-        errCode:0,
-        message:"ok",
-        users
-       }
+        message: "ok",
+        errCode: 0,
+        data: user,
+      };
     }
+
+    return {
+      message: "fail",
+      errCode: 1,
+    };
   } catch (error) {
-    return {
-      errCode:1,
-      message:error
-     }
+    console.log(error);
   }
+};
 
-
-
-
-}
-
-export const editUsers = async (user,id)=>{
-
-try {
-  if(user)
-  {
-    await User.update(user, {
-      where: {
-        id
-      }
-    });
-
-    return {
-      errCode:0,
-      message:"ok",
-      updatedAt:new Date()
+export const getUserById = async (id) => {
+  try {
+    const user = await db.User.findOne({ where: { id }, raw: true });
+    if (user) {
+   
+    const imageBase64=bufferTobase64(user.image)
+      return {
+        message: "ok",
+        errCode: 0,
+        data: { ...user, image: imageBase64, defaultImg: user.image },
+      };
     }
-
+    return {
+      message: "user not found",
+      errCode: 1,
+    };
+  } catch (error) {
+    console.log(error);
   }
-} catch (error) {
-  return {
-    errCode:1,
-    message:error.toString()
+};
+export const getUserByRole = async (roleID) => {
+  try {
+    const user = await db.User.findAll({ where: { roleID}, raw: true , attributes: { exclude: ['password'] }});
+    console.log(db)
+    if (user.length>0) {
+          
+      user.forEach(u => {
+          if(u.image)
+          {
+            u.image=bufferTobase64(u.image)
+          }
+      });
+
+      // const imageBase64=bufferTobase64(user.image)
+      return {
+        message: "ok",
+        errCode: 0,
+        data: user,
+      };
+    }
+    return {
+      message: "not have user !!! ",
+      errCode: 1,
+    };
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
-  
-}
 
-export const deleteUsers =async  (id)=>{
+export const addSchedule = async (currentNumber,maxNumber,doctorId,date,timeType)=>{
 
   try {
-  
-    await User.destroy({
-      where: {
-        id
-      }
-    });
-
-    return  {
-      errCode:0,
-      message:"ok",
-      deletedAt:new Date()
+    const schedule = await db.Schedule.create({
+      currentNumber,
+      maxNumber,
+      doctorId,
+      date,
+      timeType
+    },{raw:true});
+    if(schedule)
+    {
+      return {
+        message: "ok",
+        errCode: 0,
+        data: schedule,
+      };
     }
-  } catch (error) {
     return {
-      errCode:1,
-      message:error.toString()
-    }
+      message: "fail",
+      errCode: 1,
+    };
+  } catch (error) {
+    console.log(error);
   }
 
 

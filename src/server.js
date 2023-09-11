@@ -14,8 +14,9 @@ console.log("xin chao cac bạn t");
 //config engine  S
 //configViewEngine(app);
 app.use(cors()) 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json());
 
 
 //router

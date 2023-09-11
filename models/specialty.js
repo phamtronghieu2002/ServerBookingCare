@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+
+      
+      Specialist.hasMany(models.Markdown, { foreignKey: 'specialistId', as: 'specialistInfor' });
+
+      Specialist.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
+      Specialist.belongsToMany(models.User, { through: 'doctor_clinic_specialties', as: 'user' });
     }
   }
   Specialist.init({
     descriptions: DataTypes.STRING,
     img: DataTypes.BLOB('long'),
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    doctorId:  DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Specialist',

@@ -2,35 +2,43 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('histories', {
+    await queryInterface.createTable('Markdowns', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
-      descriptions: {
-        type: Sequelize.STRING,
-        allowNull: false
+      contentHTML: {
+        type: Sequelize.TEXT('long')
       },
-      file: {
-        type: Sequelize.STRING,
-        allowNull: false
+      contentMarkdown: {
+        type: Sequelize.TEXT('long')
+      },
+      desc: {
+        type: Sequelize.TEXT('long')
       },
       doctorId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'Users', // Thay thế bằng tên thực sự của bảng Allcodes
           key: 'id'
         }
       },
-    patientId: {
+      clinicId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
-          model: 'Users', // Thay thế bằng tên thực sự của bảng Allcodes
+          model: 'clinics', // Thay thế bằng tên thực sự của bảng Allcodes
+          key: 'id'
+        }
+      },
+      specialtyId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'specialists', // Thay thế bằng tên thực sự của bảng Allcodes
           key: 'id'
         }
       },
@@ -45,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('histories');
+    await queryInterface.dropTable('Markdowns');
   }
 };

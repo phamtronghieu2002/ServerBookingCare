@@ -3,20 +3,17 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('allcodes', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
 
-      key: {
+
+      type_id: {
         type: Sequelize.STRING,
         allowNull: false,
+  
       },
-      type: {
+      key_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        primaryKey: true
       },
       valueEN: {
         type: Sequelize.STRING,

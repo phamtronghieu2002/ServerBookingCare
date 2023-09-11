@@ -11,11 +11,11 @@ module.exports = {
       },
     email: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     firstname: {
       type: Sequelize.STRING,
@@ -28,6 +28,10 @@ module.exports = {
     gender: {
       type: Sequelize.STRING,
       allowNull: false,
+      references: {
+        model: 'allcodes',
+        key: 'key_id'
+      },
     },
     address: {
       type: Sequelize.STRING,
@@ -38,24 +42,24 @@ module.exports = {
       allowNull: false,
     },
     roleID: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false, 
       references: {
         model: 'allcodes',
-        key: 'id'
+        key: 'key_id'
       },
     },
     positionID: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false, 
       references: {
         model: 'allcodes',
-        key: 'id'
+        key: 'key_id'
       },
     },
     image: {
       type: Sequelize.BLOB('long'),
-      allowNull: false
+      allowNull: true
     }
 ,
       createdAt: {

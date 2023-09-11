@@ -17,6 +17,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      doctorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users', // Thay thế bằng tên thực sự của bảng Allcodes
+          key: 'id'
+        }
+      },
       date: {
         type: Sequelize.DATE,
         allowNull: false,

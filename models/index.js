@@ -38,4 +38,4 @@ console.log("xin chao >>> ")
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

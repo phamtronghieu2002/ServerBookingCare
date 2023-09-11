@@ -2,15 +2,25 @@
 const {
   Model
 } = require('sequelize');
+const markdown = require('./markdown');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      User.belongsTo(models.Allcode);
+
+
+   
+
+      User.belongsTo(models.Allcode, { foreignKey: 'gender',targetKey:"key_id" ,as: 'genderInfo' });
+      User.belongsTo(models.Allcode, { foreignKey: 'roleID',targetKey:"key_id", as: 'roleInfo' });
+      User.belongsTo(models.Allcode, { foreignKey: 'positionID',targetKey:"key_id", as: 'positionInfo' });
+      
+      User.hasMany(models.Markdown, { foreignKey: 'doctorId', as: 'doctorInfor' });
+
+      User.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
+      User.belongsToMany(models.Specialist, { through: 'doctor_clinic_specialties', as: 'specialty' });
+
+      
     }
   }
   User.init({
@@ -21,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.STRING,
     address: DataTypes.STRING,
     phonenumber: DataTypes.STRING,
-    positionID: DataTypes.INTEGER,
-    roleID: DataTypes.INTEGER,
+    positionID: DataTypes.STRING,
+    roleID: DataTypes.STRING,
     image: DataTypes.BLOB('long')
   }, {
     sequelize,

@@ -10,11 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       statusId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Allcodes', // Thay thế bằng tên thực sự của bảng Allcodes
-          key: 'id'
+          key: 'key_id'
         }
       },
       doctorId: {
@@ -38,12 +38,12 @@ module.exports = {
       date: {
         type: Sequelize.DATE,
         allowNull: false,
-        primaryKey: true,
+     
       },
       timeType: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
+   
       },
       createdAt: {
         allowNull: false,
