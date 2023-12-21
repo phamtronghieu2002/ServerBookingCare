@@ -8,7 +8,7 @@ export const getAllDoctor = async () => {
       },
       raw: true,
       where: {
-        roleID: "R2", // Same as using `id: { [Op.in]: [1,2,3] }`
+        roleID: "R2", 
       },
       include: [
         {

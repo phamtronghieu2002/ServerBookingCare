@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "bookingCare",
+    "database": "BOOKING",
     "host": "localhost",
     "dialect": "mysql"
   },

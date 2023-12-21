@@ -10,13 +10,7 @@ export const handleAddUser = async (req, res) => {
     positionID,
   } = req.body;
   console.log(
-    firstname,
-    lastname,
-    gender,
-    address,
-    phonenumber,
-    roleID,
-    positionID
+    req.body
   );
   const { descriminator } = req.params;
 
@@ -106,24 +100,26 @@ export const handleGetUserByRole = async (req,res)=>{
 }
 
 
-export const handleSchedule = async (req,res)=>{
+export const handleAddSchedule = async (req,res)=>{
 
   //currentNumber,maxNumber,doctorId,date,timeType
 
 
-  const {currentNumber,maxNumber,doctorId,date,timeType} = req.body;
+  const data = req.body;
   console.log(req.body)
+ 
 
-
-  if(currentNumber && maxNumber && doctorId && date && timeType)
+  if(data.length>0)
   {
-    const response = await userService.addSchedule(currentNumber,maxNumber,doctorId,date,timeType);
+    const response = await userService.addSchedule(data);
     if(response)
     {
       return res.status(200).json(response);
     }
     return res.status(500).json({ message: "server error !!!" });
   }
+
+  return res.status(400).json({message: "missing param!!"})
 
 
 

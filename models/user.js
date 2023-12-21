@@ -17,9 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       
       User.hasMany(models.Markdown, { foreignKey: 'doctorId', as: 'doctorInfor' });
 
-      User.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
-      User.belongsToMany(models.Specialist, { through: 'doctor_clinic_specialties', as: 'specialty' });
+      User.hasMany(models.doctor_clinic_specialty, { foreignKey: 'doctorId',sourceKey:"id", as: 'doctorInfo' });
 
+
+
+      // User.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
+      // User.belongsToMany(models.Specialist, { through: 'doctor_clinic_specialties', as: 'specialty' });
+      User.hasMany(models.DoctorInfor,{ foreignKey: 'doctorID', as: 'doctorInfors' })
       
     }
   }

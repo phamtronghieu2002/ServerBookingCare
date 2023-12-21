@@ -32,6 +32,10 @@ module.exports = {
       timeType: {
         type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'allcodes',
+          key: 'key_id'
+        },
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('schedules');
+    await queryInterface.update('schedules');
   }
 };

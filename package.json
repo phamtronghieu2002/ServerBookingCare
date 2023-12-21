@@ -1,9 +1,14 @@
 {
   "name": "sern",
   "version": "1.0.0",
+  "engines": {
+    "npm": "9.5.1",
+    "node": "18.16.0"
+    },
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/server.js",
     "erd": "sequelize-erd --source src/models/diagram.js --destination src/erd.svg"
@@ -30,7 +35,10 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "mysql2": "^3.4.0",
+    "nodemailer": "^6.9.7",
+    "react-day-picker": "^8.8.2",
     "react-hook-form": "^7.45.1",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "uuid": "^9.0.1"
   }
 }

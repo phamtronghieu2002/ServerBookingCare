@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       
       Specialist.hasMany(models.Markdown, { foreignKey: 'specialistId', as: 'specialistInfor' });
 
-      Specialist.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
-      Specialist.belongsToMany(models.User, { through: 'doctor_clinic_specialties', as: 'user' });
+      Specialist.hasMany(models.doctor_clinic_specialty, { foreignKey: 'specialtyId', sourceKey:"id",as: 'SpecialistInfo' });
+
+      // Specialist.belongsToMany(models.Clinic, { through: 'doctor_clinic_specialties', as: 'clinic' });
+      // Specialist.belongsToMany(models.User, { through: 'doctor_clinic_specialties', as: 'user' });
     }
   }
   Specialist.init({

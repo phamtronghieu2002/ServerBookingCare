@@ -134,16 +134,11 @@ export const getUserByRole = async (roleID) => {
 };
 
 
-export const addSchedule = async (currentNumber,maxNumber,doctorId,date,timeType)=>{
+export const addSchedule = async (data)=>{
 
   try {
-    const schedule = await db.Schedule.create({
-      currentNumber,
-      maxNumber,
-      doctorId,
-      date,
-      timeType
-    },{raw:true});
+    const schedule = await db.Schedule.bulkCreate(data);
+
     if(schedule)
     {
       return {

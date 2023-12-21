@@ -40,10 +40,19 @@ module.exports = {
         allowNull: false,
      
       },
+      
+      token: {
+        type: Sequelize.STRING,
+        allowNull: false,
+     
+      },
       timeType: {
         type: Sequelize.STRING,
         allowNull: false,
-   
+        references: {
+          model: 'Allcodes', // Thay thế bằng tên thực sự của bảng Allcodes
+          key: 'key_id'
+        }
       },
       createdAt: {
         allowNull: false,

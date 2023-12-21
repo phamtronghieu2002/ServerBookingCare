@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('allcodes');
+    await queryInterface.update('allcodes');
   }
 };
